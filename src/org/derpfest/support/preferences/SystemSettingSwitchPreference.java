@@ -18,7 +18,6 @@
 package org.derpfest.support.preferences;
 
 import android.content.Context;
-import androidx.preference.SwitchPreference;
 import android.util.AttributeSet;
 import android.provider.Settings;
 
