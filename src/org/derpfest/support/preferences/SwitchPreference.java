@@ -54,7 +54,9 @@ public class SwitchPreference extends androidx.preference.SwitchPreference {
     protected void performClick(View view) {
         super.performClick(view);
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0) {
+                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
+            Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HAPTIC_ON_SWITCH, 1) != 0) {
             mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
         }
     }
