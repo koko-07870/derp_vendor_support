@@ -170,8 +170,9 @@ public class ColorPickerDialog extends AlertDialog implements ColorPickerView.On
     private void doHapticFeedback() {
         final boolean hapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
-
-        if (hapticEnabled) {
+        final boolean switchHapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HAPTIC_ON_SWITCH, 1) != 0;
+        if (hapticEnabled && switchHapticEnabled) {
             mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
         }
     }
