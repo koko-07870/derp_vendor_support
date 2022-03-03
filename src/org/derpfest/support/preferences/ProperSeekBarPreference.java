@@ -356,9 +356,9 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
     private void doHapticFeedback() {
         final boolean hapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
-        final boolean switchHapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_ON_SWITCH, 1) != 0;
-        if (hapticEnabled && switchHapticEnabled) {
+        final boolean sliderHapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HAPTIC_ON_SLIDER, 1) != 0;
+        if (hapticEnabled && sliderHapticEnabled) {
             mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
         }
     }
