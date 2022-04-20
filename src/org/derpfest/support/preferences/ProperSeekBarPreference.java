@@ -223,7 +223,9 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         if (mTrackingTouch && !mContinuousUpdates) {
             mTrackingValue = newValue;
             updateValueViews();
-            doHapticFeedback();
+            int duration = (int) (1 + 79 * (newValue - mMinValue) / (mMaxValue - mMinValue));
+            if (newValue == mMinValue || newValue == mMaxValue) duration = 100;
+            doHapticFeedback(duration);
         } else if (mValue != newValue) {
             if (!callChangeListener(newValue)) {
                 mSeekBar.setProgress(getSeekValue(mValue));
@@ -263,7 +265,9 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         } else if (id == R.id.plus) {
             setValue(mValue + mInterval, true);
         }
-        doHapticFeedback();
+        int duration = (int) (1 + 79 * (mValue - mMinValue) / (mMaxValue - mMinValue));
+        if (mValue == mMinValue || mValue == mMaxValue) duration = 100;
+        doHapticFeedback(duration);
     }
 
     @Override
@@ -353,13 +357,13 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         setValue(newValue, mSeekBar != null);
     }
 
-    private void doHapticFeedback() {
+    private void doHapticFeedback(int duration) {
         final boolean hapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
         final boolean sliderHapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HAPTIC_ON_SLIDER, 1) != 0;
         if (hapticEnabled && sliderHapticEnabled) {
-            mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
+            mVibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 }
