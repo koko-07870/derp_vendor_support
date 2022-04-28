@@ -266,8 +266,10 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         } else if (id == R.id.plus) {
             setValue(mValue + mInterval, true);
         }
-        int duration = (int) (1 + 79 * (mValue - mMinValue) / (mMaxValue - mMinValue));
-        if (mValue == mMinValue || mValue == mMaxValue) duration = 100;
+        int duration = 100;
+        if (mValue != mMinValue && mValue != mMaxValue && mMinValue != mMaxValue) {
+            duration = (int) (1 + 79 * (mValue - mMinValue) / (mMaxValue - mMinValue));
+        }
         doHapticFeedback(duration);
     }
 
