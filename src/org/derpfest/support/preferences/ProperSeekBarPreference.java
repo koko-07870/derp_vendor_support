@@ -16,14 +16,17 @@
 
 package org.derpfest.support.preferences;
 
+import static android.provider.Settings.System.HAPTIC_FEEDBACK_ENABLED;
+import static android.provider.Settings.System.HAPTIC_ON_SLIDER;
+
+import java.time.Duration;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import androidx.preference.*;
 import androidx.core.content.res.TypedArrayUtils;
 import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +36,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.internal.util.derp.VibratorHelper;
 
 import org.derpfest.support.R;
 
@@ -63,8 +68,7 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
     protected boolean mTrackingTouch = false;
     protected int mTrackingValue;
 
-    private final Context mContext;
-    private final Vibrator mVibrator;
+    private final VibratorHelper mVibratorHelper;
 
     public ProperSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -106,8 +110,9 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         mSeekBar = new SeekBar(context, attrs);
         setLayoutResource(R.layout.preference_proper_seekbar);
 
-        mContext = context;
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        mVibratorHelper = new VibratorHelper(context,
+                HAPTIC_FEEDBACK_ENABLED,
+                HAPTIC_ON_SLIDER);
     }
 
     public ProperSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -360,12 +365,6 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
     }
 
     private void doHapticFeedback(int duration) {
-        final boolean hapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
-        final boolean sliderHapticEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_ON_SLIDER, 1) != 0;
-        if (hapticEnabled && sliderHapticEnabled) {
-            mVibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
-        }
+        mVibratorHelper.vibrateForDuration(duration);
     }
 }

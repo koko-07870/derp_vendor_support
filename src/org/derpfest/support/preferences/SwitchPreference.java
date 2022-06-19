@@ -16,24 +16,27 @@
 
 package org.derpfest.support.preferences;
 
+import static android.provider.Settings.System.HAPTIC_FEEDBACK_ENABLED;
+import static android.provider.Settings.System.HAPTIC_ON_SWITCH;
+
 import android.content.Context;
 import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
 import androidx.core.content.res.TypedArrayUtils;
 
+import com.android.internal.util.derp.VibratorHelper;
+
 public class SwitchPreference extends androidx.preference.SwitchPreference {
 
-    private final Context mContext;
-    private final Vibrator mVibrator;
+    private final VibratorHelper mVibratorHelper;
 
     public SwitchPreference(Context context, AttributeSet attrs, int defStyleAttr,
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        mContext = context;
+        mVibratorHelper = new VibratorHelper(context,
+                HAPTIC_FEEDBACK_ENABLED,
+                HAPTIC_ON_SWITCH);
     }
 
     public SwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -53,11 +56,6 @@ public class SwitchPreference extends androidx.preference.SwitchPreference {
     @Override
     protected void performClick(View view) {
         super.performClick(view);
-        if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
-            Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HAPTIC_ON_SWITCH, 1) != 0) {
-            mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
-        }
+        mVibratorHelper.vibrateForEffectId(VibrationEffect.EFFECT_CLICK);
     }
 }
