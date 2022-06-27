@@ -229,7 +229,7 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         if (mTrackingTouch && !mContinuousUpdates) {
             mTrackingValue = newValue;
             updateValueViews();
-            int duration = (int) (1 + 79 * (newValue - mMinValue) / (mMaxValue - mMinValue));
+            int duration = (int) (1 + 48 * (newValue - mMinValue) / (mMaxValue - mMinValue));
             if (newValue == mMinValue || newValue == mMaxValue) duration = 100;
             doHapticFeedback(duration);
         } else if (mValue != newValue) {
