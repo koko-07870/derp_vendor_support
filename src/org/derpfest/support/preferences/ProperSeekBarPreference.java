@@ -19,8 +19,6 @@ package org.derpfest.support.preferences;
 import static android.provider.Settings.System.HAPTIC_FEEDBACK_ENABLED;
 import static android.provider.Settings.System.HAPTIC_ON_SLIDER;
 
-import java.time.Duration;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -37,6 +35,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.internal.util.derp.derpUtils;
 import com.android.internal.util.derp.VibratorHelper;
 
 import org.derpfest.support.R;
@@ -70,6 +69,7 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
     protected int mTrackingValue;
 
     private final VibratorHelper mVibratorHelper;
+    private final boolean mHasLinearMotorVibrator;
 
     public ProperSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
@@ -114,6 +114,7 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         mVibratorHelper = new VibratorHelper(context,
                 HAPTIC_FEEDBACK_ENABLED,
                 HAPTIC_ON_SLIDER);
+        mHasLinearMotorVibrator = derpUtils.hasLinearMotorVibrator(context);
     }
 
     public ProperSeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -366,6 +367,8 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
     }
 
     private void doHapticFeedback(int duration) {
-        mVibratorHelper.vibrateForDuration(duration);
+        if (mHasLinearMotorVibrator) {
+            mVibratorHelper.vibrateForDuration(duration);
+        }
     }
 }
