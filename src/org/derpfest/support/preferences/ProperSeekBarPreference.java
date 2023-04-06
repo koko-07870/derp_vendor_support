@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.android.internal.util.derp.VibratorHelper;
 
 import org.derpfest.support.R;
+import org.derpfest.support.util.Utils;
 
 public class ProperSeekBarPreference extends Preference implements SeekBar.OnSeekBarChangeListener,
         View.OnClickListener, View.OnLongClickListener {
@@ -121,8 +122,8 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
 
     public ProperSeekBarPreference(Context context, AttributeSet attrs) {
         this(context, attrs, TypedArrayUtils.getAttr(context,
-                androidx.preference.R.attr.preferenceStyle,
-                android.R.attr.preferenceStyle));
+                        androidx.preference.R.attr.seekBarPreferenceStyle,
+                        com.android.internal.R.attr.seekBarPreferenceStyle));
     }
 
     public ProperSeekBarPreference(Context context) {
@@ -199,8 +200,8 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         if (mMinusImageView != null) {
             if (mValue == mMinValue || mTrackingTouch) {
                 mMinusImageView.setClickable(false);
-                mMinusImageView.setColorFilter(getContext().getColor(R.color.disabled_text_color),
-                        PorterDuff.Mode.MULTIPLY);
+                mMinusImageView.setColorFilter(Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorTertiary),
+                        PorterDuff.Mode.SRC_IN);
             } else {
                 mMinusImageView.setClickable(true);
                 mMinusImageView.clearColorFilter();
@@ -210,7 +211,7 @@ public class ProperSeekBarPreference extends Preference implements SeekBar.OnSee
         if (mPlusImageView != null) {
             if (mValue == mMaxValue || mTrackingTouch) {
                 mPlusImageView.setClickable(false);
-                mPlusImageView.setColorFilter(getContext().getColor(R.color.disabled_text_color),
+                mPlusImageView.setColorFilter(Utils.getColorAttrDefaultColor(getContext(), android.R.attr.textColorTertiary),
                         PorterDuff.Mode.MULTIPLY);
             } else {
                 mPlusImageView.setClickable(true);
