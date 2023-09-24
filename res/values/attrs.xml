@@ -17,8 +17,11 @@
 
     <!-- Base attributes available to CustomSeekBarPreference. -->
     <declare-styleable name="CustomSeekBarPreference">
+        <attr name="defaultValueText" format="string" />
         <attr name="interval" format="integer" />
         <attr name="units" format="string|reference" />
+        <attr name="showSign" format="boolean" />
+        <attr name="continuousUpdates" format="boolean" />
         <attr name="allowEditText" format="boolean" />
     </declare-styleable>
 
