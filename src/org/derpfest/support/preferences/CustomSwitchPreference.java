@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 
 import org.derpfest.support.R;
 
-public class CustomSwitchPreference extends SwitchPreference {
+public class CustomSwitchPreference extends SwitchPreferenceCompat {
 
     public CustomSwitchPreference(Context context) {
         super(context);
