@@ -65,4 +65,11 @@
         <attr name="units" format="string|reference" />
         <attr name="continuousUpdates" format="boolean" />
     </declare-styleable>
+
+    <!-- CardView --> 
+    <declare-styleable name="CardViewPerf">
+        <attr name="cardBackgroundColor" format="color" />
+        <attr name="cardCornerRadius" format="dimension" />
+        <attr name="cardElevation" format="dimension" />
+    </declare-styleable>         
 </resources>
