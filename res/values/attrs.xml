@@ -71,4 +71,11 @@
         <attr name="dkey" format="string" />
         <attr name="dkeyNightOnly" format="boolean" />
     </declare-styleable>
+
+    <!-- CardView --> 
+    <declare-styleable name="CardViewPerf">
+        <attr name="cardBackgroundColor" format="color" />
+        <attr name="cardCornerRadius" format="dimension" />
+        <attr name="cardElevation" format="dimension" />
+    </declare-styleable>              
 </resources>
